@@ -1,0 +1,449 @@
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #000000;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
+.carousel .container > a {
+    font-size: 200%;
+    position: relative;
+    display: inline-block;
+    padding: 25px 30px;
+    margin: 40px 0;
+    color: #03e9f4;
+    text-decoration: none;
+    word-spacing: 10px;
+    /* text-transform: uppercase; */
+    transition: 0.5s;
+    letter-spacing: 4px;
+    overflow: hidden;
+    margin-right: 50px;
+
+}
+.carousel .container > a:hover {
+    background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 200px #03e9f4;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
+.carousel .container > a{
+    filter: hue-rotate(250deg);
+}
+
+
+.carousel .container > a span {
+    position: absolute;
+    display: block;
+}
+
+.carousel .container > a span:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #027131);
+    animation: animate1 1s linear infinite;
+}
+
+@keyframes animate1 {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+.carousel .container > a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,
+            transparent, #027131);
+    animation: animate2 1s linear infinite;
+    animation-delay: 0.25s;
+}
+
+@keyframes animate2 {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+.carousel .container > a {
+
+}
+.carousel .container > a :nth-child(3) {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #027131);
+    animation: animate3 1s linear infinite;
+    animation-delay: 0.50s;
+}
+
+@keyframes animate3 {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+
+.carousel .container > a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #027131);
+    animation: animate4 1s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes animate4 {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+    }
+}
+
+/* ##############for .carousel */
+:root {
+    /* Define custom properties (variables) for various carousel settings */
+    --carousel-transition-duration: 250ms; /* Transition speed */
+    --carousel-transition-ease: ease-out; /* Transition easing */
+    --carousel-bg-color-rgb: 0, 0, 0; /* Background color of carousel in RGB */
+    --carousel-shadow-color-rgb: 128, 128, 128; /* Shadow color for carousel in RGB */
+    --carousel-item-width: 184px; /* Carousel item width, converted from 11.5rem to px */
+    --carousel-item-height: 280px; /* Carousel item height, converted from 17.5rem to px */
+    --carousel-item-hover-effect: 1.075; /* Scaling factor when hovering over an item */
+    --carousel-item-reflection-blur: 4px; /* Blur for item reflection */
+    --carousel-item-empty-color-rgb: 255, 255, 255; /* Empty item color */
+    --carousel-item-glow-color-rgb: 255, 255, 255; /* Item glow color */
+    --carousel-item-glow-size: 80px; /* Size of the glow effect */
+    --carousel-diameter: 800px; /* Diameter of the 3D carousel */
+    --carousel-3d-perspective: 1000px; /* Perspective depth of the 3D carousel */
+    --carousel-3d-perspective-origin: 50% 20%; /* Perspective origin, positioning of the view */
+    --carousel-control-button-width: 20px; /* Width of carousel control buttons */
+    --carousel-control-button-height: 64px; /* Height of carousel control buttons */
+    --carousel-control-color-rgb: 255, 255, 255; /* Color of control buttons */
+    --carousel-animation-duration: 25s; /* Time for one complete rotation */
+    --carousel-animation-play-state: running; /* Play state of the carousel rotation animation */
+    --carousel-direction-animation-play-state: paused; /* Initial state of directional control animations */
+}
+
+*,
+*::before,
+*::after {
+    /* Reset default margins, padding, and borders for all elements */
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box; /* Ensure consistent box model across elements */
+}
+
+*:focus {
+    outline: none; /* Remove outline from focused elements */
+}
+
+a {
+    /* Disable highlight and text selection for links */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    /* Center the carousel on the screen and set the background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(var(--carousel-bg-color-rgb));
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.carousel {
+    /* Define the 3D carousel properties */
+    --_diameter: var(--carousel-diameter); /* Diameter of the carousel */
+    --_radius: calc(var(--_diameter) / 2); /* Radius of the carousel */
+    --_item-width: var(--carousel-item-width); /* Width of carousel items */
+    --_item-height: var(--carousel-item-height); /* Height of carousel items */
+    perspective: var(--carousel-3d-perspective); /* 3D perspective distance */
+    perspective-origin: var(--carousel-3d-perspective-origin); /* Perspective origin point */
+    width: var(--_diameter); /* Width of the entire carousel */
+    height: var(--_diameter); /* Height of the entire carousel */
+}
+
+/* Media queries to make the carousel responsive */
+@media only screen and (max-width: 768px) { /* For smaller screens */
+    .carousel {
+        --_diameter: calc(var(--carousel-diameter) * 0.75); /* Reduce carousel size */
+        --_item-width: calc(var(--carousel-item-width) * 0.75); /* Reduce item size */
+        --_item-height: calc(var(--carousel-item-height) * 0.75); /* Reduce item size */
+        padding-bottom: 10px*0.75;
+        padding-left: 20px*0.75;
+        font-size: 500%*0.75;
+    }
+}
+
+@media only screen and (max-width: 512px) { /* Even smaller screens */
+    .carousel {
+        --_diameter: calc(var(--carousel-diameter) * 0.6); /* Further reduce carousel size */
+        --_item-width: calc(var(--carousel-item-width) * 0.6); /* Further reduce item size */
+        --_item-height: calc(var(--carousel-item-height) * 0.6); /* Further reduce item size */
+        padding-bottom: 10px*0.5;
+        padding-left: 20px*0.5;
+        font-size: 500%*0.5;
+    }
+}
+
+@media only screen and (max-width: 256px) { /* Very small screens */
+    .carousel {
+        --_diameter: calc(var(--carousel-diameter) * 0.25); /* Minimized carousel size */
+        --_item-width: calc(var(--carousel-item-width) * 0.25); /* Minimized item size */
+        --_item-height: calc(var(--carousel-item-height) * 0.25); /* Minimized item size */
+        padding-bottom: 10px*0.25;
+        padding-left: 20px*0.25;
+        font-size: 500%*0.25;
+    }
+}
+
+.carousel .carousel-control-button {
+    /* Style the control buttons */
+    --_width: var(--carousel-control-button-width);
+    --_height: var(--carousel-control-button-height);
+    z-index: 1; /* Ensure the buttons are above other content */
+    width: var(--_width);
+    height: var(--_height);
+    background-color: rgb(var(--carousel-control-color-rgb));
+    opacity: 0.2; /* Initial opacity */
+    transition: opacity var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth transition for opacity */
+    position: absolute;
+}
+
+.carousel .carousel-control-button:hover {
+    opacity: 0.4; /* Increase opacity when hovered */
+}
+
+.carousel .carousel-control-button:has(input:checked) {
+    opacity: 0.8; /* Increase opacity when the button is checked */
+}
+
+.carousel .carousel-control-button input {
+    /* Make control button inputs invisible but clickable */
+    -webkit-appearance: none;
+    appearance: none;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer; /* Pointer cursor to indicate interactivity */
+}
+
+.carousel .carousel-control-button.left {
+    /* Style for the left control button */
+    clip-path: polygon(0% 50%, 100% 0%, 100% 100%); /* Create a left arrow shape */
+    top: calc(var(--_radius) - var(--_height) / 2);
+    left: 0; /* Position it on the left side */
+}
+
+.carousel:has(.carousel-control-button.left input:checked) {
+    /* Play the reverse animation when the left button is checked */
+    --carousel-direction-animation-play-state: running;
+    
+}
+
+.carousel .carousel-control-button.right {
+    /* Style for the right control button */
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%); /* Create a right arrow shape */
+    top: calc(var(--_radius) - var(--_height) / 2);
+    right: 0; /* Position it on the right side */
+}
+
+.carousel:has(.carousel-control-button.right input:checked) {
+    /* Pause animation when right button is checked */
+    --carousel-direction-animation-play-state: paused;
+}
+
+.carousel .carousel-rotation-direction {
+    /* Set up the carousel's rotation and 3D transform */
+    --_direction-animation-play-state: var(--carousel-direction-animation-play-state);
+    --_z: calc(var(--_radius) * -1); /* Translate items into the Z-axis (into the screen) */
+    transform: translateZ(var(--_z)); /* Move items into a 3D space */
+    transform-style: preserve-3d; /* Preserve 3D transforms */
+    animation: carousel-rotation-reverse calc(var(--carousel-animation-duration) / 2) reverse linear infinite var(--_direction-animation-play-state);
+    transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth animation transitions */
+}
+
+@keyframes carousel-rotation-reverse {
+    /* Reverse rotation animation for the carousel */
+    from {
+        transform: translateZ(var(--_z)) rotateY(0deg);
+    }
+    to {
+        transform: translateZ(var(--_z)) rotateY(360deg);
+    }
+}
+
+@keyframes carousel-rotation-normal {
+    /* Normal rotation animation for the carousel */
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.carousel .carousel-item-wrapper {
+    /* Setup for rotating carousel items */
+    transform-style: inherit; /* Inherit parent transform style */
+    width: inherit;
+    height: inherit;
+    list-style-type: none;
+    position: relative;
+    animation: carousel-rotation-normal var(--carousel-animation-duration) normal linear infinite var(--carousel-animation-play-state);
+    transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth animation and transitions */
+}
+
+.carousel .carousel-rotation-direction:has(.carousel-item:hover) {
+    /* Pause animation when an item is hovered */
+    --carousel-animation-play-state: paused;
+    --_direction-animation-play-state: paused;
+}
+
+.carousel .carousel-item {
+    /* Style for each carousel item */
+    --_width: var(--_item-width);
+    --_height: var(--_item-height);
+    --_rotation: calc(360 / var(--_num-elements) * var(--_index) * 1deg); /* Calculate rotation angle */
+    left: calc(var(--_radius) - var(--_item-width) / 2); /* Position item horizontally */
+    top: calc(var(--_radius) - var(--_item-height) / 2); /* Position item vertically */
+    transform: rotateY(var(--_rotation)) translateZ(var(--_radius)); /* Rotate and translate into 3D space */
+    transform-style: inherit;
+    width: var(--_width);
+    height: var(--_height);
+    transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth transitions */
+    box-shadow: 0 0 var(--carousel-item-glow-size) transparent; /* Initial transparent glow */
+    position: absolute;
+}
+
+.carousel .carousel-item:hover {
+    /* Apply glow effect and scaling when an item is hovered */
+    box-shadow: 0 0 var(--carousel-item-glow-size) rgb(var(--carousel-item-glow-color-rgb));
+    transform: rotateY(var(--_rotation)) translateZ(calc(var(--_radius) * var(--carousel-item-hover-effect)));
+}
+.git a h1 {
+    padding-bottom: 10px;
+    padding-left: 20px;
+    font-size: 500%;
+}
+.sql a h1{
+    font-size: 250%;
+}
+.python a h1 {
+    font-size: 300%rem;
+}
+
+
+.carousel .carousel-item a {
+    /* Set up clickable items with background images */
+    display: block;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    align-items: end;
+    justify-content: center;
+    /* justify-content: space-between; */
+    /* padding: 160px 0 0 0; */
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    color: white;
+    text-shadow: 0px 0px 10px cyan,
+                 0px 0px 20px cyan,
+                 0px 0px 40px cyan,
+                 0px 0px 80px cyan;
+    /* Hide text */
+    /* text-indent: -9999px; */
+    background-color: rgba(var(--carousel-item-empty-color-rgb), 0.5); /* Semi-transparent background */
+    background-image: var(--_image-url); /* Background image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; /* Cover entire item area */
+    transition: filter var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth filter transitions */
+}
+
+.carousel .carousel-item::before {
+    /* Reflection effect for items */
+    content: '';
+    width: inherit;
+    height: inherit;
+    background-color: rgba(var(--carousel-item-empty-color-rgb), 0.5); /* Semi-transparent reflection */
+    background-image: linear-gradient(to top, rgba(var(--carousel-bg-color-rgb), 0.25) 0%, rgba(var(--carousel-bg-color-rgb), 1.0) 75%), var(--_image-url); /* Gradients and image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    pointer-events: none; /* Ignore mouse events */
+    filter: blur(var(--carousel-item-reflection-blur)); /* Apply blur to reflection */
+    transition: filter var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth transition for blur */
+    transform-style: inherit;
+    transform-origin: center bottom; /* Reflection starts from bottom center */
+    transform: rotateX(90deg) rotateZ(180deg) rotateY(180deg); /* Rotate reflection */
+    position: absolute;
+}
+
+.carousel .carousel-item:hover::before {
+    filter: blur(var(--carousel-item-reflection-blur)); /* Keep the blur on hover */
+}
+
+.carousel .carousel-ground {
+    /* Ground shadow effect for carousel */
+    --_width: var(--_diameter);
+    --_height: var(--_diameter);
+    --_rotation: 90deg; /* Rotate shadow to be horizontal */
+    left: calc(var(--_radius) - var(--_width) / 2); /* Center horizontally */
+    top: calc(var(--_radius) - var(--_height) / 2); /* Center vertically */
+    transform: rotateX(var(--_rotation)) translateZ(calc(var(--_item-height) / -2)); /* Position below items */
+    width: var(--_width);
+    height: var(--_height);
+    border-radius: 50%; /* Make shadow circular */
+    background: radial-gradient(rgba(var(--carousel-shadow-color-rgb), 0.75) 15%, rgba(var(--carousel-bg-color-rgb), 0) 60%); /* Shadow gradient */
+    opacity: 0.5; /* Initial opacity */
+    transition: opacity var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth opacity transition */
+    position: absolute;
+}
+
+.carousel .carousel-item-wrapper:has(.carousel-item:hover) .carousel-ground {
+    /* Increase ground shadow opacity when an item is hovered */
+    opacity: 0.75;
+}

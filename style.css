@@ -10,6 +10,7 @@ body {
     font-weight: bold;
 }
 
+
 .carousel .container > a {
     font-size: 200%;
     position: relative;
@@ -24,6 +25,8 @@ body {
     letter-spacing: 4px;
     overflow: hidden;
     margin-right: 50px;
+    animation: slideright 2s ease forwards;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
 
 }
 .carousel .container > a:hover {
@@ -35,7 +38,18 @@ body {
         0 0 200px #03e9f4;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
 }
+/* @keyframes shadow {
+    0% {
+        -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(246, 245, 245, 0.333));
+    }
+
+    50%,
+    100% {
+        -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+    }
+} */
 .carousel .container > a{
+    
     filter: hue-rotate(250deg);
 }
 
@@ -86,9 +100,7 @@ body {
         top: 100%;
     }
 }
-.carousel .container > a {
 
-}
 .carousel .container > a :nth-child(3) {
     bottom: 0;
     right: 0;
@@ -202,6 +214,7 @@ body {
     perspective-origin: var(--carousel-3d-perspective-origin); /* Perspective origin point */
     width: var(--_diameter); /* Width of the entire carousel */
     height: var(--_diameter); /* Height of the entire carousel */
+    animation: slidebot 2s ease forwards;
 }
 
 /* Media queries to make the carousel responsive */
@@ -332,7 +345,9 @@ body {
     list-style-type: none;
     position: relative;
     animation: carousel-rotation-normal var(--carousel-animation-duration) normal linear infinite var(--carousel-animation-play-state);
-    transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth animation and transitions */
+    transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); 
+    /* Smooth animation and transitions */
+    
 }
 
 .carousel .carousel-rotation-direction:has(.carousel-item:hover) {
@@ -355,6 +370,7 @@ body {
     transition: all var(--carousel-transition-duration) var(--carousel-transition-ease); /* Smooth transitions */
     box-shadow: 0 0 var(--carousel-item-glow-size) transparent; /* Initial transparent glow */
     position: absolute;
+    
 }
 
 .carousel .carousel-item:hover {
@@ -446,4 +462,57 @@ body {
 .carousel .carousel-item-wrapper:has(.carousel-item:hover) .carousel-ground {
     /* Increase ground shadow opacity when an item is hovered */
     opacity: 0.75;
+}
+
+/* Animation */
+/* animation: slideright 3s ease forwards; */
+@keyframes slideleft{
+    0%{
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+@keyframes slideright{
+    0%{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+@keyframes slidetop{
+    0%{
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+@keyframes slidebot{
+    0%{
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+@keyframes zoomin{
+    0%{
+        transform: scale(0);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
 }
